@@ -1,0 +1,612 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Hugo 0.66.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+  <!-- <link rel="stylesheet" href="../css/normalize.css"> -->
+  <!-- <link rel="stylesheet" href="../css/skeleton.css"> -->
+  <!-- <link rel="stylesheet" href="../css/custom.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="alternate" href="index.xml" type="application/rss+xml" title="Speech Research">
+  <!-- <link rel="shortcut icon" href="favicon.png" type="image/x-icon" /> -->
+  <title>Tango 2</title>
+<style>
+figcaption {
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+}
+table {
+	font-family: inherit;
+	font-size: inherit;
+}
+thead {
+	background-color: inherit;
+	border-bottom: inherit;
+}
+h2 {
+	font-size: 1.5rem;
+}
+.container {
+	color: #061E61;
+}
+</style>
+</head>
+
+  <font size="5">
+
+    <div class="container">
+
+      <header role="banner">
+
+      </header>
+      <main role="main">
+        <article itemscope itemtype="https://schema.org/BlogPosting">
+          <br>
+          <h1 itemprop="headline" align="center">
+            <font color="000093" size="7">Aligning Diffusion-based Text-to-Audio Generations through Direct Preference Optimization
+            </font>
+          </h1>
+          <br>
+          <p style="line-height:1" align="center"><b>
+              <font color="061E61">Navonil Majumder<sup>1*</sup>, Chia-Yu Hung<sup>1*</sup>, Deepanway Ghosal<sup>1*</sup>, <br><br>
+                  Wei-Ning Hsu<sup>2</sup>, Rada Mihalcea<sup>3</sup>, Soujanya Poria<sup>1</sup></font>
+            </b></p>
+<!--           <p style="line-height:1" align="center"><b>
+              <font color="061E61">Danilo Mandic<sup>2</sup>, Wenwu Wang<sup>1</sup>, Mark D. Plumley<sup>1</sup></font>
+            </b></p> -->
+          <p style="line-height:0.6" align="center">
+          <font color="061E61"><sup>1</sup>DeCLaRe Lab, Singapore University of Technology and Design, Singapore</font><br><br>
+          <font color="061E61"><sup>2</sup>Independent Contributor, USA</font><br><br>
+          <font color="061E61"><sup>3</sup>University of Michigan, USA</font><br><br><br>
+            <i><sup>*</sup>equal contribution</i>
+          </p>
+ <!--          <p style="line-height:0.6" align="center">
+            <font color="061E61"> <sup>2</sup>Department of EEE, Imperial College London, London, UK</font>
+          </p>
+          <p style="line-height:1" align="center">
+            <font color="061E61"><sup>*</sup>Equal Contribution</font>
+          </p> -->
+          <section itemprop="entry-text">
+            <br>
+            <div class="container">
+              <center>
+                <p><a href="https://arxiv.org/abs/2404.09956">[Paper on ArXiv]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/declare-lab/tango">[Code on GitHub]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://huggingface.co/datasets/declare-lab/audio-alpaca">[Dataset on Hugging Face]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://huggingface.co/spaces/declare-lab/tango2">[Hugging Face Space]</a></p>
+              </center>
+            </div>
+            <h2 id="abstract">
+              <font color="000093">Abstract</font>
+            </h2>
+            <p style="text-align: justify;">
+              <font color="061E61"> Generative multimodal content is increasingly prevalent in much of the content creation arena, as it has the potential to allow artists and media personnel to create pre-production mockups by quickly bringing their ideas to life. The generation of audio from text prompts is an important aspect of such processes in the music and film industry. Many of the recent diffusion-based text-to-audio models focus on training increasingly sophisticated diffusion models on a large set of datasets of prompt-audio pairs. These models do not explicitly focus on the presence of concepts or events and their temporal ordering in the output audio with respect to the input prompt. Our hypothesis is focusing on how these aspects of audio generation could improve audio generation performance in the presence of limited data. As such, in this work, using an existing text-to-audio model <i>Tango</i>, we synthetically create a preference dataset where each prompt has a winner audio output and some loser audio outputs for the diffusion model to learn from. The loser outputs, in theory, have some concepts from the prompt missing or in an incorrect order. We fine-tune the publicly available <i>Tango</i> text-to-audio model using diffusion-DPO (direct preference optimization) loss on our preference dataset and show that it leads to improved audio output over <i>Tango</i> and <i>AudioLDM2</i>, in terms of both automatic- and manual-evaluation metrics.</font>
+            </p>
+
+            <h2 id="note">
+              <font color="000093">Salient Features</font>
+            </h2>
+            <li>
+              <font color="061E61"> <strong>Tango 2</strong> is aimed at improved text to audio alignment in terms of event presence and ordering</font>
+            </li>
+            <li>
+                <font color="061E61"> <strong>Tango 2</strong> comes from DPO fine-tuning <i>Tango</i> on our synthetic preference dataset <a href="https://huggingface.co/datasets/declare-lab/audio-alpaca"><code>Audio-alpaca</code></a></font>
+            </li>
+            <li>
+              <font color="061E61"><strong>Tango 2</strong> beats all the open-source baselines despite not seeing any OOD data beyond <i>AudioCaps</i></font>
+            </li>
+
+            <br>
+            <figure>
+              <p align="center"><img src="./tango2.jpg" width="100%" class="center" /></p>
+              <figcaption>
+                <p style="text-align: justify">
+                <font color="061E61"><b>Figure 1:</b> The creation of <strong>Tango 2</strong> has two major stages: (i) preference dataset creation, followed by, (ii) DPO fine-tuning of <i>Tango</i> LDM. The preference dataset <a href="https://huggingface.co/datasets/declare-lab/audio-alpaca"><code>Audio-alpaca</code></a> is created through perturbation of <i>AudioCaps</i> prompts and/or adversarial ensemble filtering of <i>Tango</i> outputs using <i>CLAP</i> score. <a href="https://huggingface.co/declare-lab/tango-full-ft-audiocaps"><i>Tango-full-ft</i></a> checkpoint is fine-tuned with DPO-diffusion loss using this preference data. </font>
+                </p>
+              </figcaption>
+            </figure>
+
+
+            <br>
+
+            <!-- <p><b> -->
+            <!--     <font color="061E61">Some Examples:</font> -->
+            <!--   </b></p> -->
+            <!---->
+            <!-- <table class="table" align="center" style="table-layout: fixed;word-break:break-word"> -->
+              <!-- <thead> -->
+            <!--     <tr> -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         <font color="061E61">A man is speaking </font>in a <em style="color:red;">huge room</em>. -->
+            <!--       </td> -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         <font color="061E61">A man is speaking </font>in a <em style="color:red;">small room</em>. -->
+            <!--       </td> -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         <font color="061E61">A man is speaking </font>in a <em style="color:red;">studio</em>. -->
+            <!--       </td> -->
+            <!--     </tr> -->
+              <!-- </thead> -->
+            <!--   <tbody> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A man is speaking in a huge room_sample1.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A man is speaking in a small room_sample1.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/A man is speaking in a studio_sample1.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         A racing car is passing by and disappear. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         Describe the sound of the battlefiled. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         Describe the sound of the factory. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A racing car is passing by and disappear_sample1.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Describe the sound of the battlefiled_sample1.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/Describe the sound of the factory_sample1.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!---->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         Describe the sound of the ocean. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         Nature environmental noise with various bird vocalization, high fidelity, children playing far away and light wind. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         Loud bus roaring and voices. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Describe the sound of the ocean_sample1.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Nature environmental noise with various bird vocalization, high fidelity, children playing far away and light wind_sample1.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/184. Loud bus roaring and voices.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         A cup is filled from a faucet. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         A door shutting and a female speaking. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         A helicopter is in flight. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A cup is filled from a faucet.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A door shutting and a female speaking.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/A helicopter is in flight.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         A machine is making clicking sound as people talk in the background. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         A missile launching followed by an explosion and metal screeching as a motor hums in the background. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         A person snoring. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A machine is making clicking sound as people talk in the background.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A missile launching followed by an explosion and metal screeching as a motor hums in the background.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/A person snoring.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         A toilet is flushed. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         A woman and a baby are having a conversation. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         Applause from a crowd with distant clicking and a man speaking over a loudspeaker. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A toilet is flushed.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/A woman and a baby are having a conversation.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/Applause from a crowd with distant clicking and a man speaking over a loudspeaker.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         Ducks quack and water splashes with some animal screeching in the background. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         Emergency sirens wailing. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         Female speech, a toilet flushing and then more speech. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Ducks quack and water splashes with some animal screeching in the background.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Emergency sirens wailing.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/Female speech, a toilet flushing and then more speech.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         Food sizzling with some knocking and banging followed by a woman speaking. -->
+            <!--       </td> -->
+            <!--         <td scope="col" width="33%"> -->
+            <!--         Motor vehicles are driving with loud engines and a person whistles. -->
+            <!--       </td>    -->
+            <!--       <td scope="col" width="33%"> -->
+            <!--         Water trickling with man speaking. -->
+            <!--       </td>               -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Food sizzling with some knocking and banging followed by a woman speaking.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Motor vehicles are driving with loud engines and a person whistles.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--       <td><audio controls="controls"> -->
+            <!--           <source -->
+            <!--             src="../samples/examples/Water trickling with man speaking.wav" -->
+            <!--             autoplay />Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--        <td scope="col" width="33%"> -->
+            <!--         Whistling with birds chirping. -->
+            <!--       </td>              -->
+            <!--     </tr> -->
+            <!--     <tr> -->
+            <!--       <td scope="row"><audio controls="controls"> -->
+            <!--           <source src="../samples/examples/Whistling with birds chirping.wav" autoplay /> -->
+            <!--           Your browser does not support the audio element. -->
+            <!--         </audio></td> -->
+            <!--     </tr>                    -->
+            <!--   </tbody> -->
+            <!-- </table> -->
+
+
+
+
+            <p><b>
+                <font color="000093">Comparative Samples</font>
+              </b></p>
+
+<table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+  <thead>
+    <tr>
+      <th>Text Description
+	      <!-- <br> -->
+	      <!-- <div style="color:#007bff;font-size:medium;"> -->
+		     <!--  <span style="color:red">red</span>-prompt audios are from <a href="https://huggingface.co/spaces/declare-lab/tango">[demo]</a> -->
+	      <!-- </div> -->
+      </th>
+      <th>TANGO</th>
+      <th>TANGO 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A man speaks followed by a loud bursts and then laughter</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_541_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_541_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>A man speaking as a vehicle horn honks and a man speaks in the distance</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_333_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_333_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>Pet birds tweet, chirp, and sing while music plays</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_749_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_749_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>A vehicle struggling to start with some clicks and whines</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_654_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_654_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>A cuckoo bird coos followed by a train running on railroad tracks as a bell dings in the background</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_15_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_15_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>A man yelling in the background as several basketballs bounce and shoes squeak on a hardwood surface</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_246_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_246_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>Rain falling followed by fabric rustling and footsteps shuffling then a vehicle door opening and closing as plastic crinkles</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_218_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_218_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>A man and a woman talking followed by a bell ringing and a cat meowing as a crowd of people applaud</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_180_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_180_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>Fire igniting as a motor runs followed by an electronic beep and vehicle engines running idle then car horns honking</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_142_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_142_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+    <tr>
+      <td>A man speaking followed by a faucet turning on and off while pouring water twice proceeded by water draining down a pipe</td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango1/output_113_tango.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <audio controls="controls">
+          <source src="./samples/tango2/output_113_run29.wav" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+The two general trends that can be observed in these examples—in concurrence with the human evaluators—are (i) more audible presence of the events and (ii) better event-order reproduction in the outputs of <strong>Tango 2</strong> over <i>Tango</i>.
+
+
+            <!-- <br></br> -->
+            <hr>
+            <h2 id="Limitations">
+              <font color="000093">Limitations</font>
+            </h2>
+            <div class="container">
+              <p>
+                <strong>Tango 2</strong> is based on <i>Tango</i> which was trained on the relatively small <i>AudioCaps</i> dataset. Thus, it may not generate good audio samples related to concepts unseen in the training (e.g., rooster crowing). Similarly, the preference dataset <a href="https://huggingface.co/datasets/declare-lab/audio-alpaca"><code>Audio-alpaca</code></a> is also synthetically derived from the training set of the very same <i>AudioCaps</i> dataset. Such datasets often contain some level of noise. Thus, <strong>Tango 2</strong> is not always able to finely follow the instructions in the textual control prompts.
+                <!-- For example, the generations from TANGO for prompts 'Chopping tomatoes on a wooden table' and 'Chopping potatoes on a metal table' are very similar. 'Chopping vegetables on a table' also produces similar audio samples. Training text-to-audio generation models on larger datasets is thus required for the model to learn the composition of textual concepts and varied text-audio mappings. We are training another verison of TANGO on larger datasets to enhance its generalization, compositional and controllable generation ability. -->
+              </p>
+            </div>            
+            <h2 id="Other comments">
+              <font color="000093">Other comments</font>
+            </h2>
+            <div class="container">
+              <p>
+                1. We share <a href="https://github.com/declare-lab/tango">our code on github</a>, which aims to open source the audio generation model training and evaluation for easier comparison.
+              </p>
+              <p>
+                <!-- 2. We are double checking the copy-right issue on open-sourcing our pretrained model. This will not take too long. -->
+                2. We have released our model checkpoints for reproducibility.
+              </p>
+            </div>
+            <h2 id="Acknowledgement">
+              <font color="000093">Acknowledgement</font>
+            </h2>
+            <div class="container">
+              <p>
+                This website is created based on <a href = "https://github.com/AudioLDM/AudioLDM.github.io."> https://github.com/AudioLDM/AudioLDM.github.io </a>
+              </p>
+            </div> 
+          </section>
+        </article>
+      </main>
+
+    </div>
+</font>
+
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-139981676-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+         HTML: ["input/TeX","output/HTML-CSS"],
+         TeX: {
+                Macros: {
+                         bm: ["\\boldsymbol{#1}", 1],
+                         argmax: ["\\mathop{\\rm arg\\,max}\\limits"],
+                         argmin: ["\\mathop{\\rm arg\\,min}\\limits"]},
+                extensions: ["AMSmath.js","AMSsymbols.js"],
+                equationNumbers: { autoNumber: "AMS" } },
+         extensions: ["tex2jax.js"],
+         jax: ["input/TeX","output/HTML-CSS"],
+         tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                    processEscapes: true },
+         "HTML-CSS": { availableFonts: ["TeX"],
+                       linebreaks: { automatic: true } }
+     });
+ </script>
+
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+       tex2jax: {
+         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+       }
+     });
+ </script>
+
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+
+
+
+
+
+</html>
