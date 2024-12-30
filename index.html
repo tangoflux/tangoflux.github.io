@@ -28,7 +28,7 @@
       title="Speech Research"
     />
     <!-- <link rel="shortcut icon" href="favicon.png" type="image/x-icon" /> -->
-    <title>Tango 2</title>
+    <title>TangoFlux</title>
     <style>
       figcaption {
         color: inherit;
@@ -113,17 +113,26 @@
             <div class="container">
               <center>
                 <p>
-                  <a href="https://arxiv.org/abs/2404.09956">[Paper on ArXiv]</a
-                  >&nbsp;&nbsp;&nbsp;&nbsp;<a
-                    href="https://github.com/declare-lab/tango"
-                    >[Code on GitHub]</a
-                  >&nbsp;&nbsp;&nbsp;&nbsp;<a
-                    href="https://huggingface.co/datasets/declare-lab/audio-alpaca"
-                    >[Dataset on Hugging Face]</a
-                  >&nbsp;&nbsp;&nbsp;&nbsp;<a
-                    href="https://huggingface.co/spaces/declare-lab/tango2"
-                    >[Hugging Face Space]</a
-                  >
+                  <div style="display: flex; gap: 10px; align-items: center;">
+  <a href="https://openreview.net/attachment?id=tpJPlFTyxd&name=pdf">
+    <img src="https://img.shields.io/badge/Read_the_Paper-blue?link=https%3A%2F%2Fopenreview.net%2Fattachment%3Fid%3DtpJPlFTyxd%26name%3Dpdf" alt="arXiv">
+  </a>
+  <a href="https://huggingface.co/declare-lab/TangoFlux">
+    <img src="https://img.shields.io/badge/TangoFlux-Huggingface-violet?logo=huggingface&link=https%3A%2F%2Fhuggingface.co%2Fdeclare-lab%2FTangoFlux" alt="Static Badge">
+  </a>
+  <a href="https://tangoflux.github.io/">
+    <img src="https://img.shields.io/badge/Demos-declare--lab-brightred?style=flat" alt="Static Badge">
+  </a>
+  <a href="https://huggingface.co/spaces/declare-lab/TangoFlux">
+    <img src="https://img.shields.io/badge/TangoFlux-Huggingface_Space-8A2BE2?logo=huggingface&link=https%3A%2F%2Fhuggingface.co%2Fspaces%2Fdeclare-lab%2FTangoFlux" alt="Static Badge">
+  </a>
+  <a href="https://huggingface.co/datasets/declare-lab/CRPO">
+    <img src="https://img.shields.io/badge/TangoFlux_Dataset-Huggingface-red?logo=huggingface&link=https%3A%2F%2Fhuggingface.co%2Fdatasets%2Fdeclare-lab%2FTangoFlux" alt="Static Badge">
+  </a>
+  <a href="https://github.com/declare-lab/TangoFlux">
+    <img src="https://img.shields.io/badge/Github-brown?logo=github&link=https%3A%2F%2Fgithub.com%2Fdeclare-lab%2FTangoFlux" alt="Static Badge">
+  </a>
+</div>
                 </p>
               </center>
             </div>
@@ -154,32 +163,13 @@
               <font color="000093">Salient Features</font>
             </h2>
             <li>
-              <font color="061E61">
-                <strong>Tango 2</strong> is aimed at improved text to audio
-                alignment in terms of event presence and ordering</font
-              >
-            </li>
-            <li>
-              <font color="061E61">
-                <strong>Tango 2</strong> comes from DPO fine-tuning
-                <i>Tango</i> on our synthetic preference dataset
-                <a
-                  href="https://huggingface.co/datasets/declare-lab/audio-alpaca"
-                  ><code>Audio-alpaca</code></a
-                ></font
-              >
-            </li>
-            <li>
-              <font color="061E61"
-                ><strong>Tango 2</strong> beats all the open-source baselines
-                despite not seeing any OOD data beyond <i>AudioCaps</i></font
-              >
-            </li>
+              
+          
 
             <br />
             <figure>
               <p align="center">
-                <img src="./tango2.jpg" width="100%" class="center" />
+                <img src="./teaser.png" width="100%" class="center" />
               </p>
               <figcaption>
                 <p style="text-align: justify">
@@ -188,19 +178,10 @@
                     <strong>TangoFlux</strong> has two major stages: (i)
                     Pretraining (ii) CRPO
 
-                    <a
-                      href="https://huggingface.co/datasets/declare-lab/audio-alpaca"
-                      ><code>Audio-alpaca</code></a
-                    >
-                    is created through perturbation of <i>AudioCaps</i> prompts
-                    and/or adversarial ensemble filtering of
+                  <br />
+                    TangoFlux is pretrained on WavCaps and AudioCaps.
                     <i>Tango</i> outputs using <i>CLAP</i> score.
-                    <a
-                      href="https://huggingface.co/declare-lab/tango-full-ft-audiocaps"
-                      ><i>Tango-full-ft</i></a
-                    >
-                    checkpoint is fine-tuned with DPO-diffusion loss using this
-                    preference data.
+                    
                   </font>
                 </p>
               </figcaption>
@@ -217,7 +198,7 @@
             <table
               class="table"
               align="center"
-              style="table-layout: fixed; word-break: break-word"
+              style="table-layout: fixed; word-break: break-word; width: 100%; border-collapse: collapse;margin-left: 0; "
             >
               <thead>
                 <tr>
@@ -228,21 +209,21 @@
                     <!--  <span style="color:red">red</span>-prompt audios are from <a href="https://huggingface.co/spaces/declare-lab/tango">[demo]</a> -->
                     <!-- </div> -->
                   </th>
-
-                  <th>Stable Audio Open</th>
-                  <th>TANGO 2</th>
-                  <th>AudioLDM2</th>
-                  <th>AudioBox</th>
-                  <th>TangoFlux (ours)</th>
+                  
+                  <th style="font-size: 18px;">Stable Audio Open</th>
+                  <th style="font-size: 18px;">TANGO 2</th>
+                  <th style="font-size: 18px;">AudioLDM2</th>
+                  <th style="font-size: 18px;">AudioBox</th>
+                  <th style="font-size: 18px;">TangoFlux (ours)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>
+                  <td style="font-size: 20px;">
                     Melodic human whistling harmonizing with natural birdsong
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio3.wav"
                         type="audio/wav"
@@ -251,13 +232,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_3.wav"
                         type="audio/wav"
@@ -266,13 +247,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_3.wav"
                         type="audio/wav"
@@ -282,13 +263,13 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <td style="font-size: 20px;">
                     A basketball bounces rhythmically on a court, shoes squeak
                     against the floor, and a referee’s whistle cuts through the
                     air.
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio1.wav"
                         type="audio/wav"
@@ -297,13 +278,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_1.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_1.wav"
                         type="audio/wav"
@@ -312,13 +293,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_1.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_1.wav"
                         type="audio/wav"
@@ -334,7 +315,7 @@
                     something lurking unseen.
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio5.wav"
                         type="audio/wav"
@@ -343,13 +324,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_5.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_5.wav"
                         type="audio/wav"
@@ -358,13 +339,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_5.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_5.wav"
                         type="audio/wav"
@@ -379,7 +360,7 @@
                     pouring sound
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio4.wav"
                         type="audio/wav"
@@ -388,13 +369,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_4.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_4.wav"
                         type="audio/wav"
@@ -403,13 +384,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_4.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_4.wav"
                         type="audio/wav"
@@ -425,7 +406,7 @@
                     into their seats
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio2.wav"
                         type="audio/wav"
@@ -434,13 +415,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_2.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_2.wav"
                         type="audio/wav"
@@ -449,13 +430,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_2.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_2.wav"
                         type="audio/wav"
@@ -466,10 +447,98 @@
                 </tr>
                 <tr>
                   <td>
+                    A pile of coins spills onto a wooden table with a metallic clatter, followed by the hushed murmur of a tavern crowd and the creak of a swinging door.
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source
+                        src="./samples/stable_audio7.wav"
+                        type="audio/wav"
+                      />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source src="./samples/tango2_7.wav" type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source
+                        src="./samples/audioldm2_7.wav"
+                        type="audio/wav"
+                      />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source src="./samples/audiobox_7.wav" type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source
+                        src="./samples/tangoflux_7.wav"
+                        type="audio/wav"
+                      />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    The deep growl of an alligator ripples through the swamp as reeds sway with a soft rustle and a turtle splashes into the murky water.
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source
+                        src="./samples/stable_audio6.wav"
+                        type="audio/wav"
+                      />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source src="./samples/tango2_6.wav" type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source
+                        src="./samples/audioldm2_6.wav"
+                        type="audio/wav"
+                      />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source src="./samples/audiobox_6.wav" type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                  <td>
+                    <audio controls="controls" style="width: 150px;">
+                      <source
+                        src="./samples/tangoflux_6.wav"
+                        type="audio/wav"
+                      />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
                     Melodic human whistling harmonizing with natural birdsong
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio3.wav"
                         type="audio/wav"
@@ -478,13 +547,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_3.wav"
                         type="audio/wav"
@@ -493,13 +562,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_3.wav"
                         type="audio/wav"
@@ -513,7 +582,7 @@
                     Melodic human whistling harmonizing with natural birdsong
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio3.wav"
                         type="audio/wav"
@@ -522,13 +591,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_3.wav"
                         type="audio/wav"
@@ -537,13 +606,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_3.wav"
                         type="audio/wav"
@@ -557,7 +626,7 @@
                     Melodic human whistling harmonizing with natural birdsong
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/stable_audio3.wav"
                         type="audio/wav"
@@ -566,13 +635,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/tango2_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/audioldm2_3.wav"
                         type="audio/wav"
@@ -581,13 +650,13 @@
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source src="./samples/audiobox_3.wav" type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                   </td>
                   <td>
-                    <audio controls="controls">
+                    <audio controls="controls" style="width: 150px;">
                       <source
                         src="./samples/tangoflux_3.wav"
                         type="audio/wav"
@@ -596,210 +665,10 @@
                     </audio>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    Melodic human whistling harmonizing with natural birdsong
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/stable_audio3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source src="./samples/tango2_3.wav" type="audio/wav" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/audioldm2_3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source src="./samples/audiobox_3.wav" type="audio/wav" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tangoflux_3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Melodic human whistling harmonizing with natural birdsong
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/stable_audio3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source src="./samples/tango2_3.wav" type="audio/wav" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/audioldm2_3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source src="./samples/audiobox_3.wav" type="audio/wav" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tangoflux_3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Melodic human whistling harmonizing with natural birdsong
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/stable_audio3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source src="./samples/tango2_3.wav" type="audio/wav" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/audioldm2_3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source src="./samples/audiobox_3.wav" type="audio/wav" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tangoflux_3.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    A man and a woman talking followed by a bell ringing and a
-                    cat meowing as a crowd of people applaud
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tango1/output_180_tango.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tango2/output_180_run29.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Fire igniting as a motor runs followed by an electronic beep
-                    and vehicle engines running idle then car horns honking
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tango1/output_142_tango.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tango2/output_142_run29.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    A man speaking followed by a faucet turning on and off while
-                    pouring water twice proceeded by water draining down a pipe
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tango1/output_113_tango.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                  <td>
-                    <audio controls="controls">
-                      <source
-                        src="./samples/tango2/output_113_run29.wav"
-                        type="audio/wav"
-                      />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </td>
-                </tr>
+              
+                
+               
+            
               </tbody>
             </table>
 
